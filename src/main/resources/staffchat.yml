@@ -1,0 +1,40 @@
+# ============================================================
+#  JartonChat - StaffChat Configuration
+# ============================================================
+
+meta:
+  config-version: 1.0.0
+
+staff-chat:
+  # Whether staffchat toggle state should persist across restarts
+  toggles:
+    chat-toggles-persist-after-restart: true
+    let-staff-members-leave-staffchat: true
+    notify-toggle-status-on-join: true
+
+  # Staffchat prefix trigger
+  # Messages starting with this will be routed into staffchat.
+  # Example: "# This is a staff-only message"
+  prefix:
+    enabled: true
+    symbol: "#"
+
+sounds:
+  messages:
+    enabled: true
+    name: ENTITY.ITEM.PICKUP
+    volume: 1.0
+    pitch: 0.5
+  notifications:
+    enabled: true
+    name: ENTITY.ITEM.PICKUP
+    volume: 1.0
+    pitch: 0.75
+
+formatting:
+  # In-game staffchat message format
+  ingame: " | &7%player% » &f%message%"
+  # Discord-to-Minecraft message format
+  from-discord: " |  | &b%user% » &f%message%"
+  # Minecraft-to-Discord message format
+  to-discord: "**[SC]** %player%: %message%"

@@ -1,0 +1,183 @@
+name: JartonChat
+main: me.jarton.chat.JartonChat
+version: 2.1.1
+api-version: 1.19
+softdepend: [PlaceholderAPI, LiteBans, JartonFriends]
+description: Honey-themed, configurable chat plugin with ranks, formatting, mutes, private messages, staff/admin/manager chat, and Discord integration
+author: SimplyJar
+
+taco-hot-reload: true
+
+commands:
+  clearchat:
+    description: Clear the public chat
+    usage: /clearchat
+    permission: jartonchat.clearchat
+
+  mutechat:
+    description: Toggle global chat mute
+    usage: /mutechat
+    permission: jartonchat.mutechat
+
+  mute:
+    description: Mute a specific player
+    usage: /mute <player>
+    permission: jartonchat.mute
+
+  afk:
+    description: Toggles AFK status
+    usage: /afk
+
+  unmute:
+    description: Unmute a specific player
+    usage: /unmute <player>
+    permission: jartonchat.unmute
+
+  msg:
+    description: Send a private message
+    usage: /msg <player> <message>
+    aliases: [tell, whisper, pm]
+    permission: jartonchat.msg
+
+  reply:
+    description: Reply to the last private message
+    usage: /reply <message>
+    aliases: [r]
+    permission: jartonchat.reply
+
+  chatcolor:
+    description: Change your personal chat message color
+    usage: /chatcolor <code|#hex|reset>
+    permission: jartonchat.chatcolor
+
+  jartonchat:
+    description: Main JartonChat command
+    usage: /jartonchat reload
+    permission: jartonchat.reload
+    aliases: [reloadchat]
+
+  jcbc:
+    description: Sends a custom broadcast message.
+    usage: /jcbc <type> [args...]
+    permission: jcbc.broadcast
+    aliases: [jbroadcast]
+
+  sc:
+    description: Staff chat (send or toggle)
+    usage: /sc [message]
+    permission: jartonchat.staffchat.use
+
+  sctoggle:
+    description: Toggle staffchat mode
+    usage: /sctoggle
+    permission: jartonchat.staffchat.use
+
+  screload:
+    description: Reload staffchat configuration
+    usage: /screload
+    permission: jartonchat.staffchat.admin
+
+  sctogglesound:
+    description: Toggle StaffChat sounds on/off
+    usage: /sctogglesound
+    permission: jartonchat.staffchat.use
+
+  ac:
+    description: Admin chat (send or toggle)
+    usage: /ac [message]
+    permission: jartonchat.adminchat.use
+
+  mc:
+    description: Manager chat (send or toggle)
+    usage: /mc [message]
+
+  hush:
+    description: Hide staff/admin/manager chats from your screen (for streaming)
+    usage: /hush <staff|admin|manager|all>
+    permission: jartonchat.hush
+
+  emojireload:
+    description: Reloads the emojis.yml configuration
+    usage: /emojireload
+    permission: jartonchat.emojis.reload
+    permission-message: "&cYou don't have permission to use this command."
+
+  socialspy:
+    description: Toggle SocialSpy (shows private messages)
+    usage: /socialspy [player]
+    permission: jartonchat.socialspy
+
+  commandspy:
+    description: Toggle CommandSpy (shows commands)
+    usage: /commandspy [player]
+    permission: jartonchat.commandspy
+
+
+permissions:
+  jartonchat.clearchat:
+    description: Allows clearing the chat
+    default: op
+  jartonchat.mutechat:
+    description: Allows toggling the global chat mute
+    default: op
+  jartonchat.mute:
+    description: Allows muting other players
+    default: op
+  jartonchat.unmute:
+    description: Allows unmuting other players
+    default: op
+  jartonchat.msg:
+    description: Allows sending private messages
+    default: true
+  jartonchat.reply:
+    description: Allows replying to private messages
+    default: true
+  jartonchat.reload:
+    description: Allows reloading the chat configuration
+    default: op
+  jcbc.broadcast:
+    description: Allows usage of the /jcbc command.
+    default: op
+
+  jartonchat.staffchat.use:
+    description: Allows using staffchat (# prefix, /sc, /sctoggle, /sctogglesound)
+    default: false
+  jartonchat.staffchat.admin:
+    description: Allows reloading staffchat configuration (/screload)
+    default: op
+
+  jartonchat.adminchat.use:
+    description: Allows using adminchat (/ac)
+    default: false
+
+  jartonchat.managerchat.use:
+    description: Allows using managerchat (/mc)
+    default: false
+
+  jartonchat.hush:
+    description: Allows using /hush to hide staff/admin/manager chats locally
+    default: op
+
+  jartonchat.chatcolor:
+    description: Allows a player to change their chat message color with /chatcolor
+    default: false
+
+  jartonchat.staff:
+    description: Marks a user as staff (used by SocialSpy to hide staff commands)
+    default: op
+
+  jartonchat.socialspy:
+    description: Allows toggling/receiving SocialSpy
+    default: op
+
+  jartonchat.socialspy.exempt:
+    description: Exempts a player from having their private messages shown/logged
+    default: false
+
+  jartonchat.commandspy:
+    description: Allows toggling/receiving CommandSpy
+    default: false
+
+  jartonchat.commandspy.exempt:
+    description: Exempts a player from having their commands shown/logged
+    default: false

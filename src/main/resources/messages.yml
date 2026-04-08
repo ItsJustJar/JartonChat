@@ -1,0 +1,45 @@
+join_messages:
+- " USERNAME &7joins the quest!"
+- " USERNAME &7steps into the adventure!"
+- " USERNAME &7arrives to write their story!"
+- " USERNAME &7enters the unknown!"
+- " USERNAME &7begins their journey!"
+- " USERNAME &7enters the realm of legends!"
+
+quit_messages:
+- " USERNAME &7fades into the horizon."
+- " USERNAME &7departs the adventure."
+- " USERNAME &7leaves their mark and moves on."
+- " USERNAME &7vanishes into the shadows."
+- " USERNAME &7fades into the background."
+- " USERNAME &7disappears into the threads of time."
+
+combat_quit_messages:
+- " USERNAME &7tried to escape battle... and paid the price."
+- " USERNAME &7turned their back on the fight — death showed no mercy."
+- " USERNAME &7vanished mid-battle, but fate struck them down."
+- " USERNAME &7chose flight over fight — and met their end."
+- " USERNAME &7thought they could run from death. They were wrong."
+- " USERNAME &7logged out mid-fight and was claimed by justice."
+
+messages:
+    spam: "&f Easy there, speedster. Flooding the chat isn't allowed."
+    swearing: "&cOops! Watch your language, sailor!"
+    you_have_been_muted: "&f You have just been muted for TIME!"
+    you_are_muted: "&f You are muted for TIME!"
+    you_have_been_unmuted: "&f You have been un-muted!"
+    global_chat_muted: "&f Chat is currently muted!"
+    you_have_muted_global_chat: "&f You have &cmuted &fglobal chat!"
+    you_have_unmuted_global_chat: "&f You have &aunmuted &fglobal chat!"
+    no_one_to_reply_to: "&f You have no one to reply to!"
+
+
+clickable_name:
+    enabled: true
+    command: "/friend {player}"
+    hover_text: "&eClick to manage friendship with &f{player}"
+
+private-messages:
+    format:
+        sender: "&6&lME &e-> &e{recipient}&f: {message}"
+        recipient: "&e{sender} &e-> &6&lME&f: {message}"

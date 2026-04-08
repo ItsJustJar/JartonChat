@@ -1,0 +1,62 @@
+# ============================================================
+#  JartonChat - Discord Integration
+# ============================================================
+
+meta:
+  config-version: 1.0.0
+
+bot:
+  token: "OTEyMTQ0NTAwMDYxNzk0MzI0.GwqFUB.93x0dpWZo_qzxlxstd7fdH4QXUcSJLaBsPEums"
+
+channels:
+  global:   "1391645092980457659"
+  staff:    "1391645093261217929"
+  admin:    "1466266994134224897"
+  manager:  "1462482898614620222"
+  status:   "1448599688474267690"
+
+webhooks:
+  global:   "https://discord.com/api/webhooks/1417034637657505802/sBZBb1cKnVdy022KuUujrWyChTAXz8DNnGrQOJwMltxFQOoIYNZ_JkWRfJisqsu2VAST"
+  staff:    "https://discord.com/api/webhooks/1417034813382070315/jhFatfyQkxZAm-b40mqG2nJVe_73ofjLvNmsCwZVu0CWYBZboRz9euFOkMwa09ErRbVD"
+  admin:    "https://discord.com/api/webhooks/1466619378047914066/oHbEq8m0pnNwKhQcXf-U1675tvpxMREAZz5ivURnc3EDn62HGitnAnpTp-IihtTipcaI"
+  manager:  "https://discord.com/api/webhooks/1466619692142821439/Xiv8MTmIIjLYzJbVuPw43kqRgptidnJUcCt2WJjslGlfHPEcYl4c8KcjC78biwRaO5rO"
+
+features:
+  global-chat:
+    enabled: true
+    mc-to-discord: true
+    discord-to-mc: true
+    format:
+      mc-to-discord: "**%player%**: %message%"
+      discord-to-mc: " &f%user% » &7%message%"
+
+  staff-chat:
+    enabled: true
+    format:
+      discord-to-mc: " | %user% » &f%message%"
+
+  admin-chat:
+    enabled: true
+    format:
+      discord-to-mc: " | %user% » &f%message%"
+
+  manager-chat:
+    enabled: true
+    format:
+      discord-to-mc: " | %user% » &f%message%"
+
+  webhook:
+    enabled: true
+    avatar-url: "https://mc-heads.net/avatar/%uuid%"
+    username-format: "%player%"
+
+  status:
+    enabled: true
+    server-address: "mc.jarton.me"
+    update-interval-seconds: 60
+    embed:
+      title: "JartonMC Server Status"
+      online-color: "#57F287"
+      offline-color: "#ED4245"
+      show-player-list: true
+      thumbnail-url: "https://cdn.discordapp.com/attachments/1416440982718906480/1448626320941776978/f1ad5b0d-0701-4585-b9e0-d11f5d692dba.png?ex=693bf1e5&is=693aa065&hm=6b77f02fad80acdcd20f570a00f3c2289abc710cc5324cc76642cb4491e9a5e4&"

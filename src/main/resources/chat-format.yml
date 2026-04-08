@@ -1,0 +1,18 @@
+chat-format:
+  # You can reference {paid}, {rankup}, {staff}, {ranks}, {sep}, {name}, {message}
+  # {ranks} = all non-empty ranks joined by {sep}, followed by {sep} if not empty
+  # {sep}   = defined below
+  format: "{ranks}&f{name} %supremetags_tag%&r >> {message}"
+
+# Separator used between prefixes and before player name (only shown when needed).
+separator: "&7 | "
+
+staff-only-display:
+  - "SimplyJar"
+  - "Vaise"
+  - "SpikedYoge"
+  - "Arcalith"
+
+# Legacy PM format keys (actual active PM format is in messages.yml -> private-messages.format)
+private-message-format-sender: "&6&lME &e-> &eRECIPENT&f: MESSAGE"
+private-message-format-recipent: "&eSENDER &e-> &6&lME&f: MESSAGE"

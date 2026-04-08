@@ -1,0 +1,29 @@
+meta:
+  config-version: 1.0.0
+
+admin-chat:
+  toggles:
+    chat-toggles-persist-after-restart: true
+    let-members-leave-chat: true
+    notify-toggle-status-on-join: true
+
+  prefix:
+    enabled: true
+    symbol: "!"
+
+sounds:
+  messages:
+    enabled: true
+    name: "ENTITY.ITEM.PICKUP"
+    volume: 1.0
+    pitch: 0.6
+  notifications:
+    enabled: true
+    name: "ENTITY.ITEM.PICKUP"
+    volume: 1.0
+    pitch: 0.8
+
+formatting:
+  ingame: " | &7%player% » &f%message%"
+  from-discord: " |  | &b%user% » &f%message%"
+  to-discord: "**[AC]** | %player%: %message%"

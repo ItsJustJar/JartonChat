@@ -1,0 +1,485 @@
+package me.jarton.chat.listeners;
+
+import io.papermc.paper.chat.ChatRenderer;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
+
+import me.clip.placeholderapi.PlaceholderAPI;
+import me.jarton.chat.AdminChatManager;
+import me.jarton.chat.ChatService;
+import me.jarton.chat.ColorUtil;
+import me.jarton.chat.JartonChat;
+import me.jarton.chat.ManagerChatManager;
+import me.jarton.chat.RanksManager;
+import me.jarton.chat.StaffChatManager;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ChatListener implements Listener {
+    private final JartonChat plugin;
+    private final ChatService chatService;
+    private final StaffChatManager staffChatManager;
+    private final AdminChatManager adminChatManager;
+    private final ManagerChatManager managerChatManager;
+    private final CooldownManager cooldownManager = new DefaultCooldownManager();
+
+    private static final LegacyComponentSerializer AMP =
+            LegacyComponentSerializer.builder()
+                    .character('&')
+                    .hexColors()
+                    .useUnusualXRepeatedCharacterHexFormat()
+                    .build();
+
+    private static final PlainTextComponentSerializer PLAIN = PlainTextComponentSerializer.plainText();
+
+    private static final String SHOW_INV_CMD = "/jartonchat_showinv";
+    private static final String INV_TITLE_PREFIX = "§b";
+    private final Set<Inventory> viewOnlyInventories = Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+    public ChatListener(JartonChat plugin, ChatService chatService, StaffChatManager staffChatManager,
+                        AdminChatManager adminChatManager, ManagerChatManager managerChatManager) {
+        this.plugin = plugin;
+        this.chatService = chatService;
+        this.staffChatManager = staffChatManager;
+        this.adminChatManager = adminChatManager;
+        this.managerChatManager = managerChatManager;
+    }
+
+    private static boolean containsItemToken(String text) {
+        return text.contains("[item]") || text.contains("[i]");
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onAsyncChat(AsyncChatEvent event) {
+        if (!plugin.chatEnabled) return;
+
+        final Player player = event.getPlayer();
+        Component original = event.message();
+        String message = PLAIN.serialize(original);
+
+        if (message.endsWith("§§§§§§§§§§§"))
+            return;
+
+        if (staffChatManager != null && (staffChatManager.isInStaffChat(player) ||
+                (staffChatManager.isPrefixEnabled() && message.startsWith(staffChatManager.getPrefixSymbol())))) {
+
+            event.setCancelled(true);
+
+            if (message.startsWith(staffChatManager.getPrefixSymbol())) {
+                message = message.substring(staffChatManager.getPrefixSymbol().length()).trim();
+            }
+
+            if (player.hasPermission("jartonchat.staffchat.use")) {
+                staffChatManager.sendStaffMessage(player, message);
+            } else {
+                player.sendMessage("§cYou don’t have permission to use staffchat.");
+            }
+            return;
+        }
+
+        if (adminChatManager != null && (adminChatManager.isInAdminChat(player) ||
+                (adminChatManager.isPrefixEnabled() && message.startsWith(adminChatManager.getPrefixSymbol())))) {
+
+            event.setCancelled(true);
+
+            if (message.startsWith(adminChatManager.getPrefixSymbol())) {
+                message = message.substring(adminChatManager.getPrefixSymbol().length()).trim();
+            }
+
+            if (player.hasPermission("jartonchat.adminchat.use")) {
+                adminChatManager.sendAdminMessage(player, message);
+            } else {
+                player.sendMessage("§cYou don’t have permission to use adminchat.");
+            }
+            return;
+        }
+
+        if (managerChatManager != null && (managerChatManager.isInManagerChat(player) ||
+                (managerChatManager.isPrefixEnabled() && message.startsWith(managerChatManager.getPrefixSymbol())))) {
+
+            event.setCancelled(true);
+
+            if (message.startsWith(managerChatManager.getPrefixSymbol())) {
+                message = message.substring(managerChatManager.getPrefixSymbol().length()).trim();
+            }
+
+            if (player.hasPermission("jartonchat.managerchat.use")) {
+                managerChatManager.sendManagerMessage(player, message);
+            } else {
+                player.sendMessage("§cYou don’t have permission to use managerchat.");
+            }
+            return;
+        }
+
+        if (!player.hasPermission("jarton.exemptcooldown")) {
+            long remaining = cooldownManager.getRemainingTime(player.getUniqueId());
+
+            if (remaining > 0) {
+                double sec = remaining / 1000.0;
+                player.sendMessage(ChatColor.RED + "You must wait " +
+                        String.format("%.1f", sec) + "s before chatting again.");
+                event.setCancelled(true);
+                return;
+            }
+
+            cooldownManager.resetCooldown(player.getUniqueId());
+        }
+
+        if (containsItemToken(message)) {
+            ItemStack hand = player.getInventory().getItemInMainHand();
+            if (hand == null || hand.getType().isAir()) {
+                event.setCancelled(true);
+                player.sendMessage("§cHold an item in your hand before using §f[i]§c / §f[item]§c.");
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 0.8f);
+                return;
+            }
+        }
+
+        RanksManager ranks = plugin.getRanksManager();
+
+        boolean staffOnly = plugin.staffOnlyDisplay.stream()
+                .anyMatch(n -> n.equalsIgnoreCase(player.getName()));
+
+        List<String> pieces = new ArrayList<>();
+        String paid = "";
+        String rankup = "";
+        String staff = "";
+
+        if (staffOnly) {
+            staff = ranks.getDisplayForTrack(player, "staff");
+            if (!staff.isEmpty()) pieces.add(staff);
+        } else {
+            paid = ranks.getDisplayForTrack(player, "paid");
+            rankup = ranks.getDisplayForTrack(player, "rankup");
+            staff = ranks.getDisplayForTrack(player, "staff");
+
+            if (!paid.isEmpty()) pieces.add(paid);
+            if (!rankup.isEmpty()) pieces.add(rankup);
+            if (!staff.isEmpty()) pieces.add(staff);
+        }
+
+        String sep = plugin.getConfig().getString("separator", "&7 • ");
+        String ranksPart = String.join(sep, pieces);
+        if (!ranksPart.isEmpty()) ranksPart = ranksPart + sep;
+
+        String nameColor = ranks.getRankNameColor(player);
+        String baseMessageColor = ranks.getRankMessageColor(player);
+
+        String messageColor = plugin.getChatColorManager()
+                .getEffectiveMessageColor(player, baseMessageColor);
+        if (messageColor == null || messageColor.isEmpty()) {
+            messageColor = baseMessageColor;
+        }
+
+        if (plugin.censorEnabled) {
+            message = chatService.censor(player, message);
+        }
+
+        String legacyMessageColor = messageColor.replace('§', '&');
+
+        if (plugin.emojisEnabled) {
+            message = chatService.replaceEmojis(player, message, legacyMessageColor);
+        }
+
+        Player mentioned = chatService.findMentioned(message);
+        if (mentioned != null) {
+            message = chatService.highlightMention(message, mentioned, legacyMessageColor);
+            mentioned.playSound(mentioned.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+        }
+
+        String rawDisplayName = player.getDisplayName();
+        boolean hasNick = !rawDisplayName.equals(player.getName());
+        String normalizedDisplayName = rawDisplayName.replace('§', '&');
+
+        String namePart = hasNick ? normalizedDisplayName : (nameColor + normalizedDisplayName);
+
+        String format = plugin.chatLineFormat;
+        String builtLine = format
+                .replace("{paid}",     paid)
+                .replace("{rankup}",   rankup)
+                .replace("{staff}",    staff)
+                .replace("{sep}",      sep)
+                .replace("{ranks}",    ranksPart)
+                .replace("{name}",     namePart)
+                .replace("{message}",  legacyMessageColor + message);
+
+        Plugin papi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
+
+        String coloredLine = ColorUtil.color(builtLine);
+        String finalLine = coloredLine;
+
+        if (papi != null && papi.isEnabled()) {
+            try {
+                finalLine = PlaceholderAPI.setPlaceholders(player, coloredLine);
+            } catch (Throwable ignored) { }
+        }
+
+        final String template = finalLine.replace('§', '&');
+
+        event.renderer(new ChatRenderer() {
+            @Override
+            public Component render(Player source, Component displayName, Component msg, Audience viewer) {
+                String perViewer = template;
+                if (papi != null && papi.isEnabled() && viewer instanceof Player v) {
+                    try {
+                        perViewer = PlaceholderAPI.setRelationalPlaceholders(v, source, perViewer);
+                    } catch (Throwable ignored) { }
+                }
+                return buildRichChatComponent(perViewer, source);
+            }
+        });
+
+        try {
+            String discordMsg = ChatColor.stripColor(message).trim();
+            if (!discordMsg.isEmpty() && plugin.getDiscordBridge() != null) {
+                plugin.getDiscordBridge().sendGlobalMessage(player.getName(), discordMsg);
+            }
+        } catch (Throwable ignored) {}
+    }
+
+    private Component buildRichChatComponent(String text, Player source) {
+        Component base;
+
+        if (!containsToken(text)) {
+            base = AMP.deserialize(text);
+        } else {
+            TextComponent.Builder out = Component.text();
+
+            int idx = 0;
+            while (idx < text.length()) {
+                int i1 = text.indexOf("[item]", idx);
+                int i2 = text.indexOf("[i]", idx);
+                int v1 = text.indexOf("[inv]", idx);
+                int v2 = text.indexOf("[inventory]", idx);
+
+                int next = minPositive(minPositive(i1, i2), minPositive(v1, v2));
+                if (next == -1) {
+                    out.append(AMP.deserialize(text.substring(idx)));
+                    break;
+                }
+
+                if (next > idx) {
+                    out.append(AMP.deserialize(text.substring(idx, next)));
+                }
+
+                if (next == i1 || next == i2) {
+                    out.append(itemComponent(source));
+                    idx = next + (next == i1 ? "[item]".length() : "[i]".length());
+                } else {
+                    out.append(inventoryComponent(source));
+                    idx = next + (next == v1 ? "[inv]".length() : "[inventory]".length());
+                }
+            }
+
+            base = out.build();
+        }
+
+        // Make player name clickable
+        return makePlayerNameClickable(base, source);
+    }
+
+    private static int minPositive(int a, int b) {
+        if (a == -1) return b;
+        if (b == -1) return a;
+        return Math.min(a, b);
+    }
+
+    private static boolean containsToken(String text) {
+        return text.contains("[item]") || text.contains("[i]") || text.contains("[inv]") || text.contains("[inventory]");
+    }
+
+    private Component itemComponent(Player player) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        boolean empty = (hand == null || hand.getType().isAir());
+        if (empty) {
+            return AMP.deserialize("&7[no item]")
+                    .hoverEvent(HoverEvent.showText(Component.text("Empty hand", NamedTextColor.GRAY)));
+        }
+        Component name = hand.displayName();
+        return name.hoverEvent(hand.asHoverEvent());
+    }
+
+    private Component inventoryComponent(Player player) {
+        String username = player.getName();
+        Component label = AMP.deserialize("&b" + username + "'s Inventory");
+        Component hover = AMP.deserialize("&bClick to view &f" + username + "'s Inventory");
+        String cmd = SHOW_INV_CMD + " " + player.getUniqueId();
+        return label.hoverEvent(HoverEvent.showText(hover)).clickEvent(ClickEvent.runCommand(cmd));
+    }
+
+    private Component makePlayerNameClickable(Component component, Player source) {
+        // Check if JartonFriends is available
+        Plugin jartonFriends = Bukkit.getPluginManager().getPlugin("JartonFriends");
+        boolean hasFriends = (jartonFriends != null && jartonFriends.isEnabled());
+
+        // Recursively process the component tree
+        return processComponentForClickableName(component, source, hasFriends);
+    }
+
+    private Component processComponentForClickableName(Component component, Player source, boolean hasFriends) {
+        if (component instanceof TextComponent textComp) {
+            String content = textComp.content();
+            String playerName = source.getName();
+
+            // Check if this component contains the player's name
+            if (content.contains(playerName)) {
+                // Create hover text
+                Component hoverText = Component.text()
+                        .append(Component.text("Click to ", NamedTextColor.YELLOW))
+                        .append(Component.text(hasFriends ? "manage friendship with " : "message ", NamedTextColor.GOLD))
+                        .append(Component.text(playerName, NamedTextColor.WHITE))
+                        .build();
+
+                // Create click action
+                ClickEvent clickEvent;
+                if (hasFriends) {
+                    // Use JartonFriends command if available
+                    clickEvent = ClickEvent.suggestCommand("/friend " + playerName);
+                } else {
+                    // Fallback to message command
+                    clickEvent = ClickEvent.suggestCommand("/msg " + playerName + " ");
+                }
+
+                // Apply click and hover events to this component
+                return textComp.hoverEvent(HoverEvent.showText(hoverText)).clickEvent(clickEvent);
+            }
+        }
+
+        // Process children
+        if (!component.children().isEmpty()) {
+            List<Component> newChildren = new ArrayList<>();
+            for (Component child : component.children()) {
+                newChildren.add(processComponentForClickableName(child, source, hasFriends));
+            }
+            return component.children(newChildren);
+        }
+
+        return component;
+    }
+
+    @EventHandler
+    public void onPreprocess(PlayerCommandPreprocessEvent e) {
+        String msg = e.getMessage();
+        if (!msg.startsWith(SHOW_INV_CMD)) return;
+        e.setCancelled(true);
+        String[] parts = msg.split("\\s+");
+        if (parts.length < 2) return;
+        UUID targetId;
+        try {
+            targetId = UUID.fromString(parts[1]);
+        } catch (IllegalArgumentException ex) {
+            return;
+        }
+        Player viewer = e.getPlayer();
+        Player target = Bukkit.getPlayer(targetId);
+        if (target == null) {
+            viewer.sendMessage("§cThat player is no longer online.");
+            return;
+        }
+        openViewOnlyInventory(viewer, target);
+    }
+
+    private void openViewOnlyInventory(Player viewer, Player target) {
+        String title = INV_TITLE_PREFIX + target.getName() + "'s Inventory";
+        Inventory inv = Bukkit.createInventory(null, 54, AMP.deserialize(title));
+        ItemStack[] storage = target.getInventory().getStorageContents();
+        int idx = 0;
+        for (ItemStack stack : storage) {
+            if (idx >= inv.getSize()) break;
+            if (stack != null) inv.setItem(idx, stack.clone());
+            idx++;
+        }
+        ItemStack[] armor = target.getInventory().getArmorContents();
+        for (ItemStack piece : armor) {
+            if (idx >= inv.getSize()) break;
+            if (piece != null) inv.setItem(idx, piece.clone());
+            idx++;
+        }
+        ItemStack off = target.getInventory().getItemInOffHand();
+        if (idx < inv.getSize() && off != null) {
+            inv.setItem(idx, off.clone());
+            idx++;
+        }
+        if (idx < inv.getSize()) {
+            ItemStack xpBottle = new ItemStack(Material.EXPERIENCE_BOTTLE);
+            ItemMeta meta = xpBottle.getItemMeta();
+            meta.setDisplayName(ChatColor.AQUA + "Experience: " +
+                    ChatColor.WHITE + target.getTotalExperience());
+            xpBottle.setItemMeta(meta);
+            inv.setItem(idx, xpBottle);
+        }
+        viewOnlyInventories.add(inv);
+        viewer.openInventory(inv);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        Inventory top = e.getView().getTopInventory();
+        if (top == null) return;
+        if (e.getView().getType() == InventoryType.CRAFTING) return;
+        if (viewOnlyInventories.contains(top)) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent e) {
+        Inventory top = e.getView().getTopInventory();
+        if (top == null)
+            return;
+        if (viewOnlyInventories.contains(top)) {
+            e.setCancelled(true);
+        }
+    }
+
+    public interface CooldownManager {
+        long getRemainingTime(UUID playerId);
+        void resetCooldown(UUID playerId);
+    }
+
+    public class DefaultCooldownManager implements CooldownManager {
+        private static final long COOLDOWN_MS = 2000;
+
+        private final Map<UUID, Long> lastMessageTimes = new HashMap<>();
+
+        @Override
+        public long getRemainingTime(UUID playerId) {
+            var lastMessageTime = lastMessageTimes.get(playerId);
+            if (lastMessageTime == null) {
+                return 0;
+            }
+
+            var remaining = COOLDOWN_MS + lastMessageTime - System.currentTimeMillis();
+            return Math.max(0, remaining);
+        }
+
+        @Override
+        public void resetCooldown(UUID playerId) {
+            lastMessageTimes.put(playerId, System.currentTimeMillis());
+        }
+    }
+}

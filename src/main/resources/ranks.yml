@@ -1,0 +1,97 @@
+# Rank order matters. Highest rank = lowest priority, Lowest rank = highest priority. 
+# Also one more thing... Jar has a really REALLY big penis (Jar didn't write this I promise)
+
+# Defining the ranks to fetch from LuckPerms & seperating them into their respective tracks managed by this plugin (for prefixes only)
+tracks:
+  paid:
+    - ultra
+    - hero
+    - legend
+    - titan
+    - jartonite
+  rankup:
+    - default
+    - wanderer
+    - explorer
+    - commoner
+    - farmer
+    - merchant
+    - artisan
+    - noble
+    - bishop
+    - monarch
+    - emperor
+    - eternal
+  staff:
+    - builder
+    - helper
+    - media
+    - jrmod
+    - mod
+    - srmod
+    - developer
+    - jradmin
+    - admin
+    - manager
+    - owner
+    - founder
+# Here you can use the defined ranks above and display what you want them to show in chat. THIS DOES NOT TRANSFER TO TAB, Tab has a seperate system to handle prefixes that is not controlled by this plugin.
+display:
+  paid:
+    ultra: "&r"
+    hero: "&r"
+    legend: "&r"
+    titan: "&r"
+    jartonite: "&r"
+  rankup:
+    default: "&r"
+    wanderer: "&r"
+    explorer: "&r"
+    commoner: "&r"
+    farmer: "&r"
+    merchant: "&r"
+    artisan: "&r"
+    noble: "&r"
+    bishop: "&r"
+    monarch: "&r"
+    emperor: "&r"
+    eternal: "&r"
+  staff:
+    media: "&r"
+    builder: "&r"
+    helper: "&r"
+    jrmod: "&r"
+    mod: "&r"
+    srmod: "&r"
+    jradmin: "&r"
+    admin: "&r"
+    developer: "&r"
+    manager: "&r"
+    owner: "&r"
+    founder: "&r"
+# Here you can use the defined groups above and specifc what name color and message color they should have    
+rank-colors:
+  default:
+    name: "&7"
+    message: "&7"
+  ultra:
+    name: "#31be47"
+    message: "&e"
+  hero:
+    name: "#22a3b7"
+    message: "&e"
+  legend:
+    name: "#d19c00"
+    message: "&e"
+  titan:
+    name: "#bc3d5d"
+    message: "&e"
+  Jartonite:
+    name: "&6"
+    message: "&e"
+  admin:
+    name: "&9"
+    message: "&f"
+  owner:
+    name: "&9"
+    message: "&f"

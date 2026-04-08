@@ -1,0 +1,34 @@
+# ============================================================
+# JartonChat Emoji Configuration
+# 
+# Add any emoji by using:
+#   ":trigger:" : "🐝"
+#
+# Players type the trigger (:trigger:) in chat and JartonChat
+# will replace it with the Unicode emoji.
+#
+# Supports:
+#  - full Unicode emojis
+#  - ANY trigger text: :bee:, :heart:, :lol:, :fire:
+# ============================================================
+
+emojis:
+  ":)" : ""
+  ":D" : ""
+  ":eyes:" : ""
+  ":fire:" : ""
+  ":sad:" : ""
+  ":heart:" : ""
+  ":<3:" : ""
+  ":innocent:" : ""
+  ":joy:" : ""
+  ":sus:" : ""
+  ":skull:" : ""
+  ":smirk:" : ""
+  ":sob:" : ""
+  ":cry:" : ""
+  ":cool:" : ""
+  ":sunglasses:" : ""
+  ":shades:" : ""
+  ":thumbsup:" : ""
+  ":thumbsdown:" : ""

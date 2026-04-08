@@ -1,0 +1,29 @@
+meta:
+  config-version: 1.0.0
+
+manager-chat:
+  toggles:
+    chat-toggles-persist-after-restart: true
+    let-members-leave-chat: true
+    notify-toggle-status-on-join: true
+
+  prefix:
+    enabled: true
+    symbol: "@"
+
+sounds:
+  messages:
+    enabled: true
+    name: "ENTITY.ITEM.PICKUP"
+    volume: 1.0
+    pitch: 0.65
+  notifications:
+    enabled: true
+    name: "ENTITY.ITEM.PICKUP"
+    volume: 1.0
+    pitch: 0.85
+
+formatting:
+  ingame: "&8[&eManagerChat&8] &7%player% >> &f%message%"
+  from-discord: "&8[&eManagerChat&8] &b%user% >> &f%message%"
+  to-discord: "**[MC]** | %player%: %message%"

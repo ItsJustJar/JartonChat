@@ -1,0 +1,137 @@
+# Custom broadcasts configuration for /jcbc command
+# Placeholders:
+# %arg1%, %arg2%, etc. - Command arguments.
+#
+# Colors:
+# You can define default colors here using standard Minecraft color codes (&c, &l, etc.)
+# or hex codes (#RRGGBB).
+#
+# Message Placeholders:
+# {main_color}, {secondary_color}, {text_color}, {bold}, {store_text}
+
+purchase:
+  enabled: true
+  permission: "jcbc.broadcast"
+  defaults:
+    main_color: "#9eff00"
+    secondary_color: "#c4ff00"
+    text_color: "&f"
+    bold: true
+  store_url: "https://store.jarton.me"
+  store_text: "store.jarton.me"
+  sounds:
+    - name: "BLOCK_NOTE_BLOCK_PLING"
+      volume: 1.0
+      pitch: 1.4
+  messages:
+    - ""
+    - "                          {main_color}{bold}ᴘᴜʀᴄʜᴀsᴇ"
+    - ""
+    - "                {secondary_color}{bold}%arg1% {text_color}ʜᴀs ᴊᴜsᴛ ʙᴏᴜɢʜᴛ {secondary_color}{bold}%arg2%{text_color}! ɢɢs!"
+    - "   {text_color}ɪꜰ ʏᴏᴜ ᴡɪsʜ ᴛᴏ sᴜᴘᴘᴏʀᴛ ᴜs ᴠɪsɪᴛ {secondary_color}&n{store_text}"
+    - ""
+
+rankup:
+  enabled: true
+  permission: "jcbc.broadcast"
+  defaults:
+    main_color: "#ffbb33"
+    secondary_color: "#ffad33"
+    text_color: "&f"
+    bold: true
+  sounds:
+    - name: "BLOCK_NOTE_BLOCK_PLING"
+      volume: 1.0
+      pitch: 1.4
+  messages:
+    - ""
+    - "                            {main_color}{bold}ʀᴀɴᴋᴜᴘ"
+    - ""
+    - "         {secondary_color}{bold}%arg1% {text_color}ʜᴀs ʀᴀɴᴋᴇᴅ ᴜᴘ ᴛᴏ {secondary_color}{bold}%arg2%{text_color}! ɢɢs!"
+    - ""
+    
+job_exp_booster:
+  enabled: true
+  permission: "jcbc.broadcast"
+  defaults:
+    main_color: "#FF6700"
+    secondary_color: "#FFBD57"
+    text_color: "&f"
+    bold: true
+  sounds:
+    - name: "BLOCK_NOTE_BLOCK_PLING"
+      volume: 1.0
+      pitch: 1.4
+  messages:
+    - ""
+    - "      {main_color}{bold}ɢʟᴏʙᴀʟ ᴊᴏʙ ᴇхᴘᴇʀɪᴇɴᴄᴇ ʙᴏᴏѕᴛᴇʀ ᴀᴄᴛɪᴠᴀᴛᴇᴅ"
+    - ""
+    - "         {secondary_color}{bold}%arg1% {text_color}ʜᴀѕ ᴀᴄᴛɪᴠᴀᴛᴇᴅ ᴀ {secondary_color}2х {text_color}ɢʟᴏʙᴀʟ ᴊᴏʙ"
+    - "               {text_color}ᴇхᴘᴇʀɪᴇɴᴄᴇ ʙᴏᴏѕᴛᴇʀ ꜰᴏʀ {secondary_color}1 ʜᴏᴜʀ{text_color}! ɢɢs!"
+    - ""
+    
+job_gold_booster:
+  enabled: true
+  permission: "jcbc.broadcast"
+  defaults:
+    main_color: "#FF6700"
+    secondary_color: "#FFBD57"
+    text_color: "&f"
+    bold: true
+  sounds:
+    - name: "BLOCK_NOTE_BLOCK_PLING"
+      volume: 1.0
+      pitch: 1.4
+  messages:
+    - ""
+    - "      {main_color}{bold}ɢʟᴏʙᴀʟ ᴊᴏʙ ɢᴏʟᴅ ʙᴏᴏѕᴛᴇʀ ᴀᴄᴛɪᴠᴀᴛᴇᴅ"
+    - ""
+    - "         {secondary_color}{bold}%arg1% {text_color}ʜᴀѕ ᴀᴄᴛɪᴠᴀᴛᴇᴅ ᴀ {secondary_color}2х {text_color}ɢʟᴏʙᴀʟ ᴊᴏʙ"
+    - "               {text_color}ɢᴏʟᴅ ʙᴏᴏѕᴛᴇʀ ꜰᴏʀ {secondary_color}1 ʜᴏᴜʀ{text_color}! ɢɢs!"
+    - ""
+    
+discordlinked:
+  enabled: true
+  permission: "jcbc.broadcast"
+  defaults:
+    main_color: "#7289DA"
+    secondary_color: "#99AAB5"
+    text_color: "&f"
+    bold: true
+  sounds:
+    - name: "BLOCK_NOTE_BLOCK_PLING"
+      volume: 1.0
+      pitch: 1.4
+  messages:
+    - ""
+    - "                   {main_color}{bold}ᴅɪѕᴄᴏʀᴅ ʟɪɴᴋ ᴀʟᴇʀᴛ"
+    - ""
+    - "         {secondary_color}{bold}%arg1% {text_color}ʜᴀѕ ꜱᴜᴄᴄᴇѕѕꜰᴜʟʟʏ ʟɪɴᴋᴇᴅ"
+    - "           {text_color}ᴛʜᴇɪʀ {secondary_color}ᴅɪѕᴄᴏʀᴅ{text_color} ᴀᴄᴄᴏᴜɴᴛ! ᴡᴏᴏ!"
+    - "                          &7[/ʟɪɴᴋ]"
+    - ""
+    
+boosterclaim:
+  enabled: true
+  permission: "jcbc.broadcast"
+  defaults:
+    main_color: "#FF7AD9"
+    secondary_color: "#FFC4F0"
+    text_color: "&f"
+    bold: true
+  sounds:
+    - name: "BLOCK_NOTE_BLOCK_PLING"
+      volume: 1.0
+      pitch: 1.4
+  messages:
+    - ""
+    - "            {main_color}{bold}ʙᴏᴏѕᴛᴇʀ ʀᴇᴡᴀʀᴅ ᴀʟᴇʀᴛ"
+    - ""
+    - "         {secondary_color}{bold}%arg1% {text_color}ʜᴀѕ ᴄʟᴀɪᴍᴇᴅ ᴛʜᴇɪʀ"
+    - "          {secondary_color}ᴅɪѕᴄᴏʀᴅ ʙᴏᴏѕᴛᴇʀ{text_color} ʀᴇᴡᴀʀᴅѕ!"
+    - "                   &7[/ʙᴏᴏѕᴛᴇʀᴄʟᴀɪᴍ]"
+    - ""
+    - "            {text_color}&l↪ &f {secondary_color}20,000x Gold"
+    - "            {text_color}&l↪ &f {secondary_color}250x Nectar"
+    - "            {text_color}&l↪ 🔑 {secondary_color}1x Rare Crate Key"
+    - ""

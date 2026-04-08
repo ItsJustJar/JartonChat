@@ -1,0 +1,112 @@
+options:
+    time: 900
+    enabled: true
+
+broadcasts:
+#    ambients:
+#        enabled: true
+#        message:
+#        - ' '
+#        - "                      &e&l🌧 Ambient Sounds 🌧"
+#        - "      &fYou can adjust background sounds volume using"
+#        - "      &fthe 'Ambient' slider in Minecraft sound settings"
+#        - "                  or toggle it in your &ecodex"
+#        - ' '
+ #   dungeon_keys:
+ #       enabled: true
+ #       message:
+ #       - ' '
+ #       - "                             &e⟐ &e&lLost? &e⟐"
+ #       - "             &fUse &e/help &fto find your way around."
+ #       - "         &fMake sure you also check out your &eCodex"
+ #       - ' '
+#    questions:
+#        enabled: true
+#        message:
+#        - ' '
+#        - "                    &e&lWilling to help us out?"
+#        - "    &fVoting for our server helps us reach more players."
+#        - "          &fUse &3/vote &fto recieve some cool rewards!"
+#        - ' '
+#    protect_terrain:
+#        enabled: true
+#        message:
+#        - ' '
+#        - "              &e  &e&lTired of those pesky bees? &e"
+#        - "                 &fJoin a town to find safe haven."
+#        - "                 &fThere is strength in numbers."
+#        - ' '
+    discord:
+        enabled: true
+        message:
+        - ' '
+        - "                            #3e96de⯪ ᴅɪѕᴄᴏʀᴅ ⯪"
+        - "         #68a3d4 ᴊᴏɪɴ ᴜѕ ᴛᴏ ᴛᴀᴋᴇ ᴘᴀʀᴛ ɪɴ ᴇᴘɪᴄ ᴇᴠᴇɴᴛѕ, ꜰɪɴᴅ"
+        - "         #68a3d4 ᴀ ᴛᴏᴡɴ ᴀɴᴅ ʜᴀᴠᴇ ᴀ ʟᴏᴛ ᴏꜰ ꜰᴜɴ ᴛᴏɢᴇᴛʜᴇʀ!"
+        - "                      #3e96de▶&e  discord.jarton.me  #3e96de◀"
+        - ' '
+    badges:
+        enabled: true
+        message:
+        - ' '
+        - "                            #e09b4c⯪ ʙᴀᴅɢᴇѕ ⯪"
+        - "         &7 ʟᴏᴏᴋɪɴɢ ꜰᴏʀ ᴀ ᴡᴀʏ ᴛᴏ ɢᴇᴛ ѕᴏᴍᴇ ᴇхᴛʀᴀ ɢᴏʟᴅ?"
+        - "      &7 ᴘᴏᴘ ᴏᴘᴇɴ &e/ʙᴀᴅɢᴇѕ &7ᴀɴᴅ ѕᴛᴀʀᴛ ᴇᴀʀɴɪɴɢ ᴛʜᴀᴛ ʙʀᴇᴀᴅ"
+        - ' '
+    voting:
+        enabled: true
+        message:
+        - ' '
+        - "                             #79e06a⯪ ᴠᴏᴛɪɴɢ ⯪"
+        - "        &7 ᴠᴏᴛᴇ ᴅᴀɪʟʏ ᴛᴏ ᴇᴀʀɴ &eɢᴏʟᴅ, ᴋᴇʏѕ & ᴘᴇʀᴋѕ!"
+        - "                     &7ᴠɪꜱɪᴛ &e/vote &7ᴛᴏ ᴄʟᴀɪᴍ."
+        - ' '
+    crates:
+        enabled: true
+        message:
+        - ' '
+        - "                             #c77ae3⯪ ᴄʀᴀᴛᴇѕ ⯪"
+        - "         &7 ᴀʀᴇ ʏᴏᴜ ʟᴏᴠɪɴɢ ʟᴏᴏᴛ? ᴇɴᴛᴇʀ ᴛʜᴇ ᴄʀᴀᴛᴇ ᴘɪᴛ!"
+        - "        &7 ᴏᴘᴇɴ ᴋᴇʏѕ ᴀᴛ &e/ᴡᴀʀᴘ ᴄʀᴀᴛᴇѕ &7ɪꜰ ʏᴏᴜ ᴅᴀʀᴇ."
+        - ' '
+    shops:
+        enabled: true
+        message:
+        - ' '
+        - "                             #d47f3e⯪ ѕʜᴏᴘѕ ⯪"
+        - "         &7 ɴᴇᴇᴅ ɪᴛᴇᴍѕ, ʙʟᴏᴄᴋѕ, ᴏʀ ᴍᴀᴛᴇʀɪᴀʟѕ? ᴠɪѕɪᴛ ᴛʜᴇ"
+        - "       &e/ѕʜᴏᴘ &7ᴀɴᴅ ᴄʜᴇᴄᴋ ᴏᴜᴛ ᴏᴜʀ ᴘʟᴀʏᴇʀ & ɢʟᴏʙᴀʟ ᴍᴀʀᴋᴇᴛ!"
+        - ' '
+    jobs:
+        enabled: true
+        message:
+        - ' '
+        - "                             #e0c64c⯪ ᴊᴏʙѕ ⯪"
+        - "      &7 ᴇᴀʀɴ ᴍᴏɴᴇʏ ʙʏ ᴅᴏɪɴɢ ᴡʜᴀᴛ ʏᴏᴜ'ʀᴇ ᴀʟʀᴇᴀᴅʏ ᴅᴏɪɴɢ!"
+        - "                  &7ᴜѕᴇ &e/ᴊᴏʙѕ &7ᴛᴏ ɢᴇᴛ sᴛᴀʀᴛᴇᴅ."
+        - ' '
+    skills:
+        enabled: true
+        message:
+        - ' '
+        - "                             #6fc4e8⯪ sᴋɪʟʟѕ ⯪"
+        - "      &7 ʟᴇᴠᴇʟ ᴜᴘ ʏᴏᴜʀ ᴀʙɪʟɪᴛɪᴇѕ ᴀɴᴅ ᴇᴀʀɴ ᴘᴏᴡᴇʀꜰᴜʟ ᴘᴇʀᴋѕ!"
+        - "               &7ᴄʜᴇᴄᴋ ʏᴏᴜʀ ᴘʀᴏɢʀᴇss ᴡɪᴛʜ &e/ѕᴋɪʟʟѕ"
+        - ' '
+    nectarshop:
+        enabled: true
+        message:
+        - ' '
+        - "                             #f1a83b⯪ ɴᴇᴄᴛᴀʀѕʜᴏᴘ ⯪"
+        - "         &7 ɢʀᴀʙ ᴠᴏᴜᴄʜᴇʀs, ɪᴛᴇᴍs, ꜱᴘᴀᴡɴᴇʀs & ᴇɴᴄʜᴀɴᴛs!"
+        - "                &7ᴄʜᴇᴄᴋ ɪᴛ ᴏᴜᴛ &e/nectarshop"
+        - ' '
+    serverstore:
+        enabled: true
+        message:
+        - ' '
+        - "                            #f15b5b⯪ sᴇʀᴠᴇʀ sᴛᴏʀᴇ ⯪"
+        - "         &7 ɢʀᴀʙ ʀᴀɴᴋs, ᴄʀᴀᴛᴇs, ᴘᴇʀᴋs & ɪɴ-ɢᴀᴍᴇ ɪᴛᴇᴍs!"
+        - "         &7 ᴀ ʜᴜɢᴇ &c❤ &7ᴛʜᴀɴᴋ ʏᴏᴜ ᴛᴏ ᴀʟʟ ᴅᴏɴᴀᴛᴏʀꜱ!"
+        - "                &7ᴄʜᴇᴄᴋ ɪᴛ ᴏᴜᴛ &e/store"
+        - ' '

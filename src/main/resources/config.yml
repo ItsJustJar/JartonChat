@@ -1,0 +1,14 @@
+chat:
+    enabled: true
+    censor: true
+    anti_spam: true
+    emojis: true
+    built_in_death_messages: false
+    chat_sound: true
+    command_argument_sound: false
+
+hush:
+  reset-on-relog: true
+
+dev:
+  force_overwrite_resources: false
